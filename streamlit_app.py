@@ -19,11 +19,15 @@ st.write("This is a demo test using MobileNetV2. Upload an image to see predicti
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    image = Image.open(uploaded_file).convert("RGB").resize((224, 224))
-    st.image(image, caption="Uploaded Image", use_container_width=True)
+   
+    original_image = Image.open(uploaded_file).convert("RGB")
+    st.image(original_image, caption="Uploaded Image", use_container_width=True)
+
+  
+    model_input = original_image.resize((224, 224))
 
     with st.spinner("Analyzing..."):
-        arr = np.array(image)
+        arr = np.array(model_input)
         arr = np.expand_dims(arr, axis=0)
         arr = preprocess_input(arr)
         preds = model.predict(arr)
