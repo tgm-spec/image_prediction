@@ -5,7 +5,7 @@ import tensorflow as tf
 from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input, decode_predictions
 from tensorflow.keras.models import load_model
 
-st.title("🔍 Image Detection - Demo with Kiwi Check")
+st.title("🔍 Image Detection - Demo")
 st.write("Upload an image to see predictions. Kiwi detection has priority over general ImageNet predictions.")
 
 # Load models
@@ -27,7 +27,7 @@ if uploaded_file is not None:
     st.image(image, caption="Uploaded Image", use_container_width=True)
 
     # --- Kiwi prediction ---
-    kiwi_input = image.resize((160, 160))
+    kiwi_input = image.resize((224, 224))
     kiwi_arr = np.expand_dims(np.array(kiwi_input) / 255.0, axis=0)
     kiwi_pred = kiwi_model.predict(kiwi_arr)
     kiwi_conf = float(kiwi_pred[0][0])  # single-class output
